@@ -173,23 +173,23 @@
             x: cell.x * SWOptions.cellWidth,
             y: cell.y * SWOptions.cellWidth,
         };
-        switch (SWOptions.dirs[this.snake.currentDirection]) {
-            case 'right':
+        switch (this.snake.currentDirection) {
+            case Snake.Direction.RIGHT:
                 ptOne = cell.pointOne();
                 ptTwo = cell.pointSix();
                 ptThree = cell.pointSeven();
                 break;
-            case 'down':
+            case Snake.Direction.DOWN:
                 ptOne = cell.pointThree();
                 ptTwo = cell.pointEight();
                 ptThree = cell.pointOne();
                 break;
-            case 'left':
+            case Snake.Direction.LEFT:
                 ptOne = cell.pointNine();
                 ptTwo = cell.pointFour();
                 ptThree = cell.pointThree();
                 break;
-            case 'up':
+            case Snake.Direction.UP:
                 ptOne = cell.pointSeven();
                 ptTwo = cell.pointTwo();
                 ptThree = cell.pointNine();
@@ -207,6 +207,11 @@
     SnakeGame.prototype.paintFood = function(cell) {
         this.circle(cell);
     };
+
+    SnakeGame.prototype.increaseSpeed = function() {
+        SWOptions.modSpeed(1);
+        this.resetGameLoop();
+    }
 
     SnakeGame.prototype.pause = function() {
         var inst = this;
@@ -228,27 +233,35 @@
     SnakeGame.prototype.processKeyPress = function(keyCode) {
         switch (keyCode) {
             case 32:
-            case "randomjump":
-                this.snake.body[0] = this.getRandomCell();
+            case "space":
+                this.snake.jump(this.getRandomCell());
                 break;
             case 37:
             case "left":
-                this.snake.move(0);
+            case 65:
+            case "a":
+                this.snake.move(Snake.Direction.LEFT);
                 break;
             case 38:
             case "up":
-                this.snake.move(1);
+            case 87:
+            case "w":
+                this.snake.move(Snake.Direction.UP);
                 break;
             case 39:
             case "right":
-                this.snake.move(2);
+            case 68:
+            case "d":
+                this.snake.move(Snake.Direction.RIGHT);
                 break;
             case 40:
             case "down":
-                this.snake.move(3);
+            case 83:
+            case "s":
+                this.snake.move(Snake.Direction.DOWN);
                 break;
             case 66:
-            case "B":
+            case "b":
                 SWOptions.modRandomness(1);
                 break;
             case 67:
@@ -261,7 +274,7 @@
                 break;
             case 75:
             case "k":
-                SWOptions.modSizeVariation(-1);
+                this.increaseSpeed();
                 break;
             case 77:
             case "m":

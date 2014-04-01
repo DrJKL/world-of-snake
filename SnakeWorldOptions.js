@@ -12,7 +12,6 @@ SWOptions.cellWidth = 60;
 SWOptions.speed = 1;
 SWOptions.maxSpeed = 7;
 SWOptions.printInfo = true;
-SWOptions.dirs = ['left', 'up', 'right', 'down'];
 SWOptions.oldthemes = [
     ['white'],
     ['red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'violet'],

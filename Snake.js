@@ -5,6 +5,13 @@ function Snake(gameInst) {
 }
 Snake.startingSize = 1;
 
+Snake.Direction = {
+    LEFT: 0,
+    UP: 1,
+    RIGHT: 2,
+    DOWN: 3,
+};
+
 Snake.prototype.create = function() {
     this.body = [];
     for (var i = Snake.startingSize; i > 0; i--) {
@@ -20,17 +27,17 @@ Snake.prototype.foodVisible = function(food) {
     for (var i = 1, check_x, check_y; i <= 15; ++i) {
         check_x = snakeHead.x;
         check_y = snakeHead.y;
-        switch (SWOptions.dirs[this.currentDirection]) {
-            case 'right':
+        switch (this.currentDirection) {
+            case Snake.Direction.RIGHT:
                 check_x += i;
                 break;
-            case 'left':
+            case Snake.Direction.LEFT:
                 check_x -= i;
                 break;
-            case 'up':
+            case Snake.Direction.UP:
                 check_y -= i;
                 break;
-            case 'down':
+            case Snake.Direction.DOWN:
                 check_y += i;
                 break;
         }
@@ -49,21 +56,19 @@ Snake.prototype.getNewHead = function() {
         ny = this.body[0].y;
 
         if ((Math.random() * 10) < SWOptions.randomness && !foodSeen) {
-            this.currentDirection = wrap(
-                this.currentDirection + (Math.random() <= 0.5 ? -1 : 1),
-                SWOptions.dirs.length);
+            this.randomTurn();
         }
-        switch (SWOptions.dirs[this.currentDirection]) {
-            case 'right':
+        switch (this.currentDirection) {
+            case Snake.Direction.RIGHT:
                 nx++;
                 break;
-            case 'down':
+            case Snake.Direction.DOWN:
                 ny++;
                 break;
-            case 'left':
+            case Snake.Direction.LEFT:
                 nx--;
                 break;
-            case 'up':
+            case Snake.Direction.UP:
                 ny--;
                 break;
         }
@@ -83,8 +88,17 @@ Snake.prototype.getNewHead = function() {
 
 };
 
+Snake.prototype.randomTurn = function() {
+    var newDirection = this.currentDirection + (Math.random() <= 0.5 ? -1 : 1);
+    this.currentDirection = wrap(newDirection, 4);
+}
+
 Snake.prototype.move = function(direction) {
-    this.currentDirection = direction;
+    this.currentDirection = wrap(direction, 4);
+};
+
+Snake.prototype.jump = function(cell) {
+    this.body[0] = cell;
 };
 
 Snake.prototype.render = function(context) {
