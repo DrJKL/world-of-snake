@@ -93,17 +93,19 @@
             return;
         }
         var stats = { // Will be printed out in reverse order.
-            "size:  ": this.snake.body.length,
-            "turn:  ": SWOptions.randomness,
-            "speed: ": SWOptions.speed,
-            "wonk:  ": SWOptions.sizeVariation,
-            "theme: ": SWOptions.currentTheme,
+            "render: ": SWOptions.getStyle(),
+            "size:   ": this.snake.body.length,
+            "turn:   ": SWOptions.randomness,
+            "speed:  ": SWOptions.speed,
+            "wonk:   ": SWOptions.sizeVariation,
+            "theme:  ": SWOptions.currentTheme,
         };
         var boxHeight = ((Object.keys(stats).length + 1) * 10);
         this.context.fillStyle = "blue";
-        this.context.fillRect(0, this.height() - boxHeight, 50, boxHeight);
+        this.context.fillRect(0, this.height() - boxHeight, 120, boxHeight);
 
         this.context.fillStyle = "white";
+        this.context.font = "12px Lucida Console";
         var height = this.height() - 5;
         for (var stat in stats) {
             if (stats.hasOwnProperty(stat)) {
