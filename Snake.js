@@ -1,0 +1,103 @@
+function Snake(gameInst) {
+    this.currentDirection = 0;
+    this.game = gameInst;
+    this.create();
+}
+Snake.startingSize = 1;
+
+Snake.prototype.create = function() {
+    this.body = [];
+    for (var i = Snake.startingSize; i > 0; i--) {
+        this.body.push(new Cell(i,0));
+    }
+};
+
+Snake.prototype.foodVisible = function(food) {
+    var snakeHead = this.body[0];
+    if (!snakeHead) {
+        return false;
+    }
+    for (var i = 1, check_x, check_y; i <= 15; ++i) {
+        check_x = snakeHead.x;
+        check_y = snakeHead.y;
+        switch (SWOptions.dirs[this.currentDirection]) {
+            case 'right':
+                check_x += i;
+                break;
+            case 'left':
+                check_x -= i;
+                break;
+            case 'up':
+                check_y -= i;
+                break;
+            case 'down':
+                check_y += i;
+                break;
+        }
+        if (food.x == check_x && food.y == check_y) {
+            return true;
+        }
+    }
+    return false;
+};
+
+Snake.prototype.getNewHead = function() {
+    var foodSeen = this.foodVisible(this.game.food);
+    var nx, ny, tries = 0;
+    do {
+        nx = this.body[0].x;
+        ny = this.body[0].y;
+
+        if ((Math.random() * 10) < SWOptions.randomness && !foodSeen) {
+            this.currentDirection = wrap(
+                this.currentDirection + (Math.random() <= 0.5 ? -1 : 1),
+                SWOptions.dirs.length);
+        }
+        switch (SWOptions.dirs[this.currentDirection]) {
+            case 'right':
+                nx++;
+                break;
+            case 'down':
+                ny++;
+                break;
+            case 'left':
+                nx--;
+                break;
+            case 'up':
+                ny--;
+                break;
+        }
+
+    } while (checkCollision(new Cell(nx,ny), this.body) && ++tries < 20);
+
+    if (tries == 20) {
+        var newLocation;
+        do {
+            newLocation = this.game.getRandomCell();
+        } while (checkCollision(newLocation, this.body));
+        return newLocation; 
+    }
+    return new Cell(
+        wrap(nx, (this.game.width() / SWOptions.cellWidth)),
+        wrap(ny, (this.game.height() / SWOptions.cellWidth)));
+
+};
+
+Snake.prototype.move = function(direction) {
+    this.currentDirection = direction;
+};
+
+Snake.prototype.render = function(context) {
+    if (!context) {
+        return;
+    }
+};
+
+function checkCollision(cell, array) {
+    for (var i = 0, len = array.length; i < len; i++) {
+        if (array[i].equals(cell)) {
+            return true;
+        }
+    }
+    return false;
+}
