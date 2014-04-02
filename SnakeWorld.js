@@ -5,10 +5,9 @@
         this.snake = new Snake(this);
         this.food = this.getRandomCell();
         this.resetGameLoop();
-        var inst = this;
         this.canvas.onkeydown = function(e) {
-            inst.processKeyPress(e.keyCode);
-        };
+            this.processKeyPress(e.keyCode);
+        }.bind(this);
         this.canvas.focus();
         this.clearCanvas();
     }
