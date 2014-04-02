@@ -58,9 +58,16 @@
     };
 
     SnakeGame.prototype.update = function() {
+        this.checkCapacity();
         this.checkFoodInBounds();
         this.updateSnake();
         this.paint();
+    };
+
+    SnakeGame.prototype.checkCapacity = function() {
+        if (this.percentOccupied() > 50) {
+            SWOptions.shrinkCells();
+        }
     };
 
     SnakeGame.prototype.checkFoodInBounds = function() {
@@ -77,7 +84,7 @@
             this.snake.body.pop();
         }
         this.snake.body.unshift(newHead);
-    }
+    };
 
     SnakeGame.prototype.paint = function() {
         this.clearCanvas();
@@ -97,7 +104,7 @@
                 this.paintCell(cell, color);
             }
         }
-    }
+    };
 
     SnakeGame.prototype.paintStats = function() {
         if (!SWOptions.printInfo) {
@@ -111,13 +118,14 @@
             "speed:   ": SWOptions.speed,
             "wonk:    ": SWOptions.sizeVariation,
             "theme:   ": SWOptions.currentTheme,
+            "level:   ": SWOptions.cellWidth,
         };
         var boxHeight = ((Object.keys(stats).length + 1) * 10);
         this.context.fillStyle = "rgba(50,50,240,0.7)";
         this.context.fillRect(0, this.height() - boxHeight, 120, boxHeight);
 
         this.context.fillStyle = "white";
-        this.context.font = "12px Lucida Console";
+        this.context.font = "12px Consolas, Lucida Console, Monaco, Courier New, monospace";
         var height = this.height() - 5;
         for (var stat in stats) {
             if (stats.hasOwnProperty(stat)) {
@@ -241,7 +249,7 @@
         }.bind(this), SWOptions.getSpeedInterval());
     };
 
-    SnakeGame.prototype.pause = function() {
+    SnakeGame.prototype.pauseStart = function() {
         this.gameLoop
             ? this.pauseGame()
             : this.startGame();
@@ -292,7 +300,7 @@
                 SWOptions.cycleStyle();
                 break;
             case 80: // p
-                this.pause();
+                this.pauseStart();
                 break;
         }
     };
