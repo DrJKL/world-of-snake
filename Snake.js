@@ -55,7 +55,7 @@ Snake.prototype.getNewHead = function() {
         nx = this.body[0].x;
         ny = this.body[0].y;
 
-        if ((Math.random() * 10) < SWOptions.randomness && !foodSeen) {
+        if ((Math.random() * 10) < SWOptions.turnChance && !foodSeen) {
             this.randomTurn();
         }
         switch (this.currentDirection) {
@@ -73,18 +73,18 @@ Snake.prototype.getNewHead = function() {
                 break;
         }
 
-    } while (checkCollision(new Cell(nx,ny), this.body) && ++tries < 20);
+    } while (this.checkCollision(new Cell(nx,ny)) && ++tries < 20);
 
     if (tries == 20) {
         var newLocation;
         do {
             newLocation = this.game.getRandomCell();
-        } while (checkCollision(newLocation, this.body));
+        } while (this.checkCollision(newLocation));
         return newLocation; 
     }
     return new Cell(
-        wrap(nx, (this.game.width() / SWOptions.cellWidth)),
-        wrap(ny, (this.game.height() / SWOptions.cellWidth)));
+        wrap(nx, (this.game.width() / SWOptions.getCellWidth())),
+        wrap(ny, (this.game.height() / SWOptions.getCellWidth())));
 
 };
 
@@ -101,15 +101,9 @@ Snake.prototype.jump = function(cell) {
     this.body[0] = cell;
 };
 
-Snake.prototype.render = function(context) {
-    if (!context) {
-        return;
-    }
-};
-
-function checkCollision(cell, array) {
-    for (var i = 0, len = array.length; i < len; i++) {
-        if (array[i].equals(cell)) {
+Snake.prototype.checkCollision = function(cell) {
+    for (var i = 0, len = this.body.length; i < len; i++) {
+        if (this.body[i].equals(cell)) {
             return true;
         }
     }

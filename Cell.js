@@ -12,55 +12,55 @@ Cell.prototype.equals = function(other) {
 
 Cell.prototype.pointOne = function() {
     return {
-        x: (this.x * SWOptions.cellWidth),
-        y: (this.y * SWOptions.cellWidth),
+        x: (this.x * SWOptions.getCellWidth()),
+        y: (this.y * SWOptions.getCellWidth()),
     };
 };
 Cell.prototype.pointTwo = function() {
     return {
-        x: (this.x * SWOptions.cellWidth) + (SWOptions.cellWidth / 2),
-        y: (this.y * SWOptions.cellWidth),
+        x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
+        y: (this.y * SWOptions.getCellWidth()),
     };
 };
 Cell.prototype.pointThree = function() {
     return {
-        x: (this.x * SWOptions.cellWidth) + (SWOptions.cellWidth),
-        y: (this.y * SWOptions.cellWidth),
+        x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
+        y: (this.y * SWOptions.getCellWidth()),
     };
 };
 Cell.prototype.pointFour = function() {
     return {
-        x: (this.x * SWOptions.cellWidth),
-        y: (this.y * SWOptions.cellWidth) + (SWOptions.cellWidth / 2),
+        x: (this.x * SWOptions.getCellWidth()),
+        y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
     };
 };
 Cell.prototype.pointFive = function() {
     return {
-        x: (this.x * SWOptions.cellWidth) + (SWOptions.cellWidth / 2),
-        y: (this.y * SWOptions.cellWidth) + (SWOptions.cellWidth / 2),
+        x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
+        y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
     };
 };
 Cell.prototype.pointSix = function() {
     return {
-        x: (this.x * SWOptions.cellWidth) + (SWOptions.cellWidth),
-        y: (this.y * SWOptions.cellWidth) + (SWOptions.cellWidth / 2),
+        x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
+        y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
     };
 };
 Cell.prototype.pointSeven = function() {
     return {
-        x: (this.x * SWOptions.cellWidth),
-        y: (this.y * SWOptions.cellWidth) + (SWOptions.cellWidth),
+        x: (this.x * SWOptions.getCellWidth()),
+        y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
     };
 };
 Cell.prototype.pointEight = function() {
     return {
-        x: (this.x * SWOptions.cellWidth) + (SWOptions.cellWidth / 2),
-        y: (this.y * SWOptions.cellWidth) + (SWOptions.cellWidth),
+        x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
+        y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
     };
 };
 Cell.prototype.pointNine = function() {
     return {
-        x: (this.x * SWOptions.cellWidth) + (SWOptions.cellWidth),
-        y: (this.y * SWOptions.cellWidth) + (SWOptions.cellWidth),
+        x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
+        y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
     };
 };

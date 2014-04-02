@@ -14,9 +14,10 @@
     }
 
     SnakeGame.prototype.getRandomCell = function() {
+        var cellWidth = SWOptions.getCellWidth();
         return new Cell(
-            Math.round(Math.random() * (this.width() - SWOptions.cellWidth) / SWOptions.cellWidth),
-            Math.round(Math.random() * (this.height() - SWOptions.cellWidth) / SWOptions.cellWidth)
+            Math.round(Math.random() * (this.width() - cellWidth) / cellWidth),
+            Math.round(Math.random() * (this.height() - cellWidth) / cellWidth)
         );
     };
 
@@ -29,13 +30,15 @@
     };
 
     SnakeGame.prototype.numCells = function() {
-        return (this.height() / SWOptions.cellWidth) * (this.width() / SWOptions.cellWidth);
+        var cellWidth = SWOptions.getCellWidth();
+        return (this.height() / cellWidth) * (this.width() / cellWidth);
     };
 
     SnakeGame.prototype.percentOccupied = function() {
         var snakeLength = this.snake.body.length;
         var numCells = this.numCells();
-        return snakeLength / numCells;
+        var percent = 100 * snakeLength / numCells;
+        return percent.toFixed(2);
     };
 
     SnakeGame.prototype.createFood = function() {
@@ -50,12 +53,12 @@
     };
 
     SnakeGame.prototype.checkOutsideBounds = function(cell) {
-        return (cell.x > (this.width() / SWOptions.cellWidth) - 1 || //
-            cell.y > (this.height() / SWOptions.cellWidth) - 1);
+        var cellWidth = SWOptions.getCellWidth();
+        return (cell.x > (this.width() / cellWidth) - 1 || //
+            cell.y > (this.height() / cellWidth) - 1);
     };
 
-    SnakeGame.prototype.paint = function() {
-        this.clearCanvas();
+    SnakeGame.prototype.update = function() {
 
         if (this.checkOutsideBounds(this.food)) {
             this.createFood();
@@ -70,19 +73,24 @@
 
         this.snake.body.unshift(newHead);
 
+        this.paint();
+    };
+
+    SnakeGame.prototype.paint = function() {
+        this.clearCanvas();
+
         // Paint Body
         for (var len = this.snake.body.length, i = len - 1; i >= 0; i--) {
             var cell = this.snake.body[i];
             var position = ((len - i) / len);
             var color = SWOptions.getTheme().getHslColor(position);
-            if (i === 0) {
+            if (i === 0) { // Head is always a triangle?
                 this.paintCell(cell, color, 'triangle');
             } else {
                 this.paintCell(cell, color);
             }
         }
         // Paint Head
-        //this.paintCell(this.snake.body[0], this.snake.body.length, 'triangle');
 
         this.paintCell(this.food, 0, 'food');
         this.writeText();
@@ -93,12 +101,13 @@
             return;
         }
         var stats = { // Will be printed out in reverse order.
-            "render: ": SWOptions.getStyle(),
-            "size:   ": this.snake.body.length,
-            "turn:   ": SWOptions.randomness,
-            "speed:  ": SWOptions.speed,
-            "wonk:   ": SWOptions.sizeVariation,
-            "theme:  ": SWOptions.currentTheme,
+            "percent: ": this.percentOccupied(),
+            "render:  ": SWOptions.getStyle(),
+            "size:    ": this.snake.body.length,
+            "turn:    ": SWOptions.turnChance,
+            "speed:   ": SWOptions.speed,
+            "wonk:    ": SWOptions.sizeVariation,
+            "theme:   ": SWOptions.currentTheme,
         };
         var boxHeight = ((Object.keys(stats).length + 1) * 10);
         this.context.fillStyle = "blue";
@@ -148,19 +157,21 @@
     };
 
     SnakeGame.prototype.square = function(cell) {
+        var cellWidth = SWOptions.getCellWidth();
         this.context.fillRect(
-            cell.x * SWOptions.cellWidth + SWOptions.getSizeMod(),
-            cell.y * SWOptions.cellWidth + SWOptions.getSizeMod(),
-            SWOptions.cellWidth + SWOptions.getSizeMod(),
-            SWOptions.cellWidth + SWOptions.getSizeMod());
+            cell.x * cellWidth + SWOptions.getSizeMod(),
+            cell.y * cellWidth + SWOptions.getSizeMod(),
+            cellWidth + SWOptions.getSizeMod(),
+            cellWidth + SWOptions.getSizeMod());
     };
 
     SnakeGame.prototype.circle = function(cell) {
+        var cellWidth = SWOptions.getCellWidth();
         this.context.beginPath();
         this.context.arc(
-            cell.x * SWOptions.cellWidth + SWOptions.cellWidth / 2,
-            cell.y * SWOptions.cellWidth + SWOptions.cellWidth / 2,
-            SWOptions.cellWidth / 2 + SWOptions.getSizeMod(),
+            cell.x * cellWidth + cellWidth / 2,
+            cell.y * cellWidth + cellWidth / 2,
+            cellWidth / 2 + SWOptions.getSizeMod(),
             0,
             2 * Math.PI);
         this.context.fill();
@@ -168,11 +179,12 @@
     };
 
     SnakeGame.prototype.triangle = function(cell) {
-        var loc, ptOne, ptTwo, ptThree;
-        loc = {
-            x: cell.x * SWOptions.cellWidth,
-            y: cell.y * SWOptions.cellWidth,
+        var cellWidth = SWOptions.getCellWidth();
+        var loc = {
+            x: cell.x * cellWidth,
+            y: cell.y * cellWidth,
         };
+        var ptOne, ptTwo, ptThree;
         switch (this.snake.currentDirection) {
             case Snake.Direction.RIGHT:
                 ptOne = cell.pointOne();
@@ -226,7 +238,7 @@
         }
         var inst = this;
         this.gameLoop = setInterval(function() {
-            inst.paint();
+            inst.update();
         }, SWOptions.getSpeedInterval());
     };
 
@@ -262,7 +274,7 @@
                 break;
             case 66:
             case "b":
-                SWOptions.modRandomness(1);
+                SWOptions.modTurnChance(1);
                 break;
             case 67:
             case "c":
