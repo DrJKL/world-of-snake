@@ -67,7 +67,7 @@
         if (this.checkOutsideBounds(this.food)) {
             this.createFood();
         }
-    }
+    };
 
     SnakeGame.prototype.updateSnake = function() {
         var newHead = this.snake.getNewHead();
@@ -113,7 +113,7 @@
             "theme:   ": SWOptions.currentTheme,
         };
         var boxHeight = ((Object.keys(stats).length + 1) * 10);
-        this.context.fillStyle = "blue";
+        this.context.fillStyle = "rgba(50,50,240,0.7)";
         this.context.fillRect(0, this.height() - boxHeight, 120, boxHeight);
 
         this.context.fillStyle = "white";
@@ -228,23 +228,28 @@
     SnakeGame.prototype.increaseSpeed = function() {
         SWOptions.modSpeed(1);
         this.resetGameLoop();
-    }
-
-    SnakeGame.prototype.pause = function() {
-        this.gameLoop = this.gameLoop
-            ? clearInterval(this.gameLoop)
-            : setInterval(function() {
-                this.paint();
-              }.bind(this), SWOptions.getSpeedInterval());
     };
 
-    SnakeGame.prototype.resetGameLoop = function() {
+    SnakeGame.prototype.pauseGame = function() {
         if (typeof this.gameLoop != "undefined" && this.gameLoop !== null) {
-            clearInterval(this.gameLoop);
+            this.gameLoop = clearInterval(this.gameLoop);
         }
+    };
+    SnakeGame.prototype.startGame = function() {
         this.gameLoop = setInterval(function() {
             this.update();
         }.bind(this), SWOptions.getSpeedInterval());
+    };
+
+    SnakeGame.prototype.pause = function() {
+        this.gameLoop
+            ? this.pauseGame()
+            : this.startGame();
+    };
+
+    SnakeGame.prototype.resetGameLoop = function() {
+        this.pauseGame();
+        this.startGame();
     };
 
     SnakeGame.prototype.processKeyPress = function(keyCode) {
