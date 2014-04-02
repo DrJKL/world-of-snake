@@ -53,32 +53,40 @@
 
     SnakeGame.prototype.checkOutsideBounds = function(cell) {
         var cellWidth = SWOptions.getCellWidth();
-        return (cell.x > (this.width() / cellWidth) - 1 || //
-            cell.y > (this.height() / cellWidth) - 1);
+        return (cell.x > (this.width()  / cellWidth) - 1 //
+             || cell.y > (this.height() / cellWidth) - 1);
     };
 
     SnakeGame.prototype.update = function() {
+        this.checkFoodInBounds();
+        this.updateSnake();
+        this.paint();
+    };
 
+    SnakeGame.prototype.checkFoodInBounds = function() {
         if (this.checkOutsideBounds(this.food)) {
             this.createFood();
         }
+    }
 
+    SnakeGame.prototype.updateSnake = function() {
         var newHead = this.snake.getNewHead();
         if (newHead.equals(this.food)) {
             this.createFood();
         } else {
             this.snake.body.pop();
         }
-
         this.snake.body.unshift(newHead);
-
-        this.paint();
-    };
+    }
 
     SnakeGame.prototype.paint = function() {
         this.clearCanvas();
+        this.paintSnake();
+        this.paintCell(this.food, 0, 'food');
+        this.paintStats();
+    };
 
-        // Paint Body
+    SnakeGame.prototype.paintSnake = function() {
         for (var len = this.snake.body.length, i = len - 1; i >= 0; i--) {
             var cell = this.snake.body[i];
             var position = ((len - i) / len);
@@ -89,13 +97,9 @@
                 this.paintCell(cell, color);
             }
         }
-        // Paint Head
+    }
 
-        this.paintCell(this.food, 0, 'food');
-        this.writeText();
-    };
-
-    SnakeGame.prototype.writeText = function() {
+    SnakeGame.prototype.paintStats = function() {
         if (!SWOptions.printInfo) {
             return;
         }
@@ -131,7 +135,9 @@
             style = SWOptions.getStyle();
         }
         var theme = SWOptions.getTheme();
-        this.context.fillStyle = (typeof color == 'string') ? color : theme[color % theme.length];
+        this.context.fillStyle = (typeof color == 'string')
+            ? color
+            : theme[color % theme.length];
 
         if (style == 'random') {
             style = SWOptions.getRandomStyle();
@@ -243,60 +249,44 @@
 
     SnakeGame.prototype.processKeyPress = function(keyCode) {
         switch (keyCode) {
-            case 32:
-            case "space":
+            case 32: // space
                 this.snake.jump(this.getRandomCell());
                 break;
-            case 37:
-            case "left":
-            case 65:
-            case "a":
+            case 37: // left
+            case 65: // a
                 this.snake.move(Snake.Direction.LEFT);
                 break;
-            case 38:
-            case "up":
-            case 87:
-            case "w":
+            case 38: // up
+            case 87: // w
                 this.snake.move(Snake.Direction.UP);
                 break;
-            case 39:
-            case "right":
-            case 68:
-            case "d":
+            case 39: // right
+            case 68: // d
                 this.snake.move(Snake.Direction.RIGHT);
                 break;
-            case 40:
-            case "down":
-            case 83:
-            case "s":
+            case 40: // down
+            case 83: // s
                 this.snake.move(Snake.Direction.DOWN);
                 break;
-            case 66:
-            case "b":
+            case 66: // b
                 SWOptions.modTurnChance(1);
                 break;
-            case 67:
-            case "c":
+            case 67: // c
                 SWOptions.printInfo = !SWOptions.printInfo;
                 break;
-            case 74:
-            case "j":
+            case 74: // j
                 SWOptions.modSizeVariation(1);
                 break;
-            case 75:
-            case "k":
+            case 75: // k
                 this.increaseSpeed();
                 break;
-            case 77:
-            case "m":
+            case 77: // m
                 SWOptions.cycleTheme();
                 break;
-            case 78:
-            case "n":
+            case 78: // n
                 SWOptions.cycleStyle();
                 break;
-            case 80:
-            case "pause":
+            case 80: // p
                 this.pause();
                 break;
         }
