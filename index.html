@@ -20,6 +20,7 @@
       ga('send', 'pageview');
     
     </script>
+    <!-- Game Scripts -->
   </head>
 
   <body>
@@ -27,16 +28,20 @@
     <header>
       <div class="container">
         <h1>world-of-snakes</h1>
-        <h2>A Work in Progress Incremental Snake Game</h2>
-
         <section id="downloads">
-          <a href="https://github.com/DrJKL/World-of-Snakes" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+          <a href="https://github.com/DrJKL/world-of-snakes" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
         </section>
       </div>
     </header>
 
     <div class="container">
       <section id="main_content">
+        <canvas id="gamecanvas" width="960" height="540">
+          <div id="canvasfallback">
+            <p>Your browser doesn't support Canvas.</p>
+            <p>To Update to a modern browser, <a href="//google.com/chrome">Click here</a> to download Chrome</p>
+          </div>
+        </canvas>
       </section>
     </div>
   </body>
