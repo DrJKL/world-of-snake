@@ -225,20 +225,20 @@
     }
 
     SnakeGame.prototype.pause = function() {
-        var inst = this;
-        this.gameLoop = this.gameLoop ? clearInterval(this.gameLoop) : setInterval(function() {
-            inst.paint();
-        }, SWOptions.getSpeedInterval());
+        this.gameLoop = this.gameLoop
+            ? clearInterval(this.gameLoop)
+            : setInterval(function() {
+                this.paint();
+              }.bind(this), SWOptions.getSpeedInterval());
     };
 
     SnakeGame.prototype.resetGameLoop = function() {
         if (typeof this.gameLoop != "undefined" && this.gameLoop !== null) {
             clearInterval(this.gameLoop);
         }
-        var inst = this;
         this.gameLoop = setInterval(function() {
-            inst.update();
-        }, SWOptions.getSpeedInterval());
+            this.update();
+        }.bind(this), SWOptions.getSpeedInterval());
     };
 
     SnakeGame.prototype.processKeyPress = function(keyCode) {
