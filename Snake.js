@@ -76,10 +76,11 @@ Snake.prototype.getNewHead = function() {
     } while (this.checkCollision(new Cell(nx,ny)) && ++tries < 20);
 
     if (tries == 20) {
+        var randomTries = 0;
         var newLocation;
         do {
             newLocation = this.game.getRandomCell();
-        } while (this.checkCollision(newLocation));
+        } while (this.checkCollision(newLocation) && randomTries++ < 20);
         return newLocation; 
     }
     return new Cell(
