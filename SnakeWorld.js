@@ -306,5 +306,10 @@
             case 80: // p
                 this.pauseStart();
                 break;
+            case 82: // r
+                SWOptions.modTurnChance(10);
+                SWOptions.modSpeed(5);
+                this.resetGameLoop();
+                break;
         }
     };
