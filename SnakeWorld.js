@@ -106,11 +106,8 @@
         }
     };
 
-    SnakeGame.prototype.paintStats = function() {
-        if (!SWOptions.printInfo) {
-            return;
-        }
-        var stats = { // Will be printed out in reverse order.
+    SnakeGame.prototype.getStats = function() {
+        return { // Will be printed out in reverse order.
             "percent: ": this.percentOccupied(),
             "render:  ": SWOptions.getStyle(),
             "size:    ": this.snake.body.length,
@@ -119,7 +116,14 @@
             "wonk:    ": SWOptions.sizeVariation,
             "theme:   ": SWOptions.currentTheme,
             "level:   ": SWOptions.cellWidth,
-        };
+        }
+    };
+
+    SnakeGame.prototype.paintStats = function() {
+        if (!SWOptions.printInfo) {
+            return;
+        }
+        var stats = this.getStats();
         var boxHeight = ((Object.keys(stats).length + 1) * 10);
         this.context.fillStyle = "rgba(50,50,240,0.7)";
         this.context.fillRect(0, this.height() - boxHeight, 120, boxHeight);
