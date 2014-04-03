@@ -5,6 +5,11 @@ body {
 
 #pagetitle {
 	text-align: center;
+	text-shadow: .1em .1em .1em blueviolet;
+	background-color: forestgreen;
+	width: 9em;
+	margin: .2em auto;
+	pointer-events: none;
 }
 
 #gamecanvas {
