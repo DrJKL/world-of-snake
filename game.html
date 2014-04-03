@@ -1,31 +1,32 @@
 <html>
 <head>
     <title>world of snake</title>
-    <link rel="stylesheet" type="text/css" href="./style.css">
-    <script type="text/javascript" src="./Theme.js"></script>
-    <script type="text/javascript" src="./SnakeWorldOptions.js"></script>
-    <script type="text/javascript" src="./Cell.js"></script>
-    <script type="text/javascript" src="./Snake.js"></script>
-    <script type="text/javascript" src="./SnakeWorld.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <script type="text/javascript" src="scripts/Theme.js"></script>
+    <script type="text/javascript" src="scripts/SnakeWorldOptions.js"></script>
+    <script type="text/javascript" src="scripts/Cell.js"></script>
+    <script type="text/javascript" src="scripts/Snake.js"></script>
+    <script type="text/javascript" src="scripts/SnakeWorld.js"></script>
 </head>
 <body>
     <header>
         <h1 id='pagetitle'>world of snake</h1>
     </header>
-    <canvas id='gamecanvas' tabindex='1' width="960" height="540">
-    <div id="canvasfallbackmessage">
-        <p>Your browser doesn't support canvas.</p>
-        <p><a href="//www.google.com/chrome/">Click here</a> to download Chrome.</p>
-        <img src="" alt="Sorry you have an old browser. Here's a picture." title="Sorry you have an old browser. Here's a picture." />
+    <div class="container" id="maincontent">
+        <canvas id='gamecanvas' tabindex='1' width="960" height="540">
+        <div id="canvasfallbackmessage">
+            <p>Your browser doesn't support canvas.</p>
+            <p><a href="//www.google.com/chrome/">Click here</a> to download Chrome.</p>
+            <img src="" alt="Sorry you have an old browser. Here's a picture." title="Sorry you have an old browser. Here's a picture." />
+        </div>
+        </canvas>
     </div>
-    </canvas>
     <footer>
         
     </footer>
-
     <!-- Executing Scripts -->
     <script type="text/javascript">
-        (function(w,d){w['GameInstance'] = new SnakeGame(d.getElementById('gamecanvas'));})(window,document);
+    (function(w,d){w['GameInstance'] = new SnakeGame(d.getElementById('gamecanvas'));})(window,document);
     </script>
     <script>
     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
