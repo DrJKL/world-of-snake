@@ -1,5 +1,6 @@
+<!DOCTYPE html>
 <html>
-<head>
+    <head>
     <title>world of snake</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
     <script type="text/javascript" src="scripts/Theme.js"></script>
@@ -8,25 +9,25 @@
     <script type="text/javascript" src="scripts/Snake.js"></script>
     <script type="text/javascript" src="scripts/SnakeWorld.js"></script>
 </head>
-<body>
-    <header>
+    <body>
+        <header>
         <h1 id='pagetitle'>world of snake</h1>
     </header>
-    <div class="container" id="maincontent">
+        <div class="container" id="maincontent">
         <canvas id='gamecanvas' tabindex='1' width="960" height="540">
-        <div id="canvasfallbackmessage">
+            <div id="canvasfallbackmessage">
             <p>Your browser doesn't support canvas.</p>
             <p><a href="//www.google.com/chrome/">Click here</a> to download Chrome.</p>
             <img src="" alt="Sorry you have an old browser. Here's a picture." title="Sorry you have an old browser. Here's a picture." />
         </div>
         </canvas>
     </div>
-    <footer>
+        <footer>
     </footer>
     <!-- Executing Scripts -->
     <script type="text/javascript">
     (function(w,d){
-        w['GameInstance'] = new SnakeGame(d.getElementById('gamecanvas'));
+    w['GameInstance'] = new SnakeGame(d.getElementById('gamecanvas'));
     })(window,document);
     </script>
     <script>
@@ -34,7 +35,6 @@
     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
     })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    
     ga('create', 'UA-49645063-2', 'drjkl.github.io');
     ga('require', 'displayfeatures');
     ga('send', 'pageview');

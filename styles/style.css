@@ -1,28 +1,25 @@
 body {
-	background-color: green;
-	font-family: Consolas, Lucida Console, Monaco, Courier New, monospace;
+    background-color: green;
+    font-family: Consolas, Lucida Console, Monaco, Courier New, monospace;
 }
-
 #pagetitle {
-	text-align: center;
-	text-shadow: .1em .1em .1em blueviolet;
-	background-color: forestgreen;
-	width: 9em;
-	margin: .2em auto;
-	pointer-events: none;
+    text-align: center;
+    text-shadow: .1em .1em .1em blueviolet;
+    background-color: forestgreen;
+    width: 9em;
+    margin: .2em auto;
+    pointer-events: none;
 }
-
 #gamecanvas {
-	display: block;
-	height: 540;
-	margin: 0 auto;
-	text-align: center;
-	width: 960;
+    display: block;
+    height: 540;
+    margin: 0 auto;
+    text-align: center;
+    width: 960;
 }
-
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 a:hover {
-	font-weight: bold;
+    font-weight: bold;
 }
