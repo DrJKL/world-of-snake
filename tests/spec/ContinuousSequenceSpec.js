@@ -14,5 +14,17 @@ define(["ContinuousSequence"], function(ContinuousSequence) {
             expect(sequence.getValue(0.5)).toEqual(150);
             expect(sequence.getValue(1.0)).toEqual(200);
         });
+        it("should not give more than the maximum", function() {
+            var sequence = new ContinuousSequence(100, 200);
+            expect(sequence.getValue(200)).toEqual(200);
+            expect(sequence.getValue(100)).toEqual(200);
+            expect(sequence.getValue(1.0)).toEqual(200);
+        });
+        it("should not give less than the minimum", function() {
+            var sequence = new ContinuousSequence(100, 200);
+            expect(sequence.getValue(0.0)).toEqual(100);
+            expect(sequence.getValue(-0.5)).toEqual(150);
+            expect(sequence.getValue(-10.0)).toEqual(100);
+        });
     });
 });
