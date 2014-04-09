@@ -1,4 +1,6 @@
+define(["SnakeWorldOptions", "Cell", "Snake"], function(SnakeWorldOptions, Cell, Snake) {
     /* The main function of the game.  Requires SnakeWorldOptions and Snake.*/
+
     function SnakeGame(canvas) {
         this.canvas = canvas;
         this.context = canvas.getContext("2d");
@@ -13,7 +15,7 @@
     }
 
     SnakeGame.prototype.getRandomCell = function() {
-        var cellWidth = SWOptions.getCellWidth();
+        var cellWidth = SnakeWorldOptions.getCellWidth();
         return new Cell(
             Math.round(Math.random() * (this.width() - cellWidth) / cellWidth),
             Math.round(Math.random() * (this.height() - cellWidth) / cellWidth)
@@ -29,7 +31,7 @@
     };
 
     SnakeGame.prototype.numCells = function() {
-        var cellWidth = SWOptions.getCellWidth();
+        var cellWidth = SnakeWorldOptions.getCellWidth();
         return (this.height() / cellWidth) * (this.width() / cellWidth);
     };
 
@@ -45,16 +47,16 @@
     };
 
     SnakeGame.prototype.clearCanvas = function() {
-        this.context.fillStyle = SWOptions.background;
+        this.context.fillStyle = SnakeWorldOptions.background;
         this.context.fillRect(0, 0, this.width(), this.height());
-        this.context.strokeStyle = SWOptions.border;
+        this.context.strokeStyle = SnakeWorldOptions.border;
         this.context.strokeRect(0, 0, this.width(), this.height());
     };
 
     SnakeGame.prototype.checkOutsideBounds = function(cell) {
-        var cellWidth = SWOptions.getCellWidth();
-        return (cell.x > (this.width()  / cellWidth) - 1 //
-             || cell.y > (this.height() / cellWidth) - 1);
+        var cellWidth = SnakeWorldOptions.getCellWidth();
+        return (cell.x > (this.width() / cellWidth) - 1 //
+            || cell.y > (this.height() / cellWidth) - 1);
     };
 
     SnakeGame.prototype.update = function() {
@@ -66,7 +68,7 @@
 
     SnakeGame.prototype.checkCapacity = function() {
         if (this.percentOccupied() > 50) {
-            SWOptions.shrinkCells();
+            SnakeWorldOptions.shrinkCells();
         }
     };
 
@@ -97,7 +99,7 @@
         for (var len = this.snake.body.length, i = len - 1; i >= 0; i--) {
             var cell = this.snake.body[i];
             var position = ((len - i) / len);
-            var color = SWOptions.getTheme().getHslColor(position);
+            var color = SnakeWorldOptions.getTheme().getHslColor(position);
             if (i === 0) { // Head is always a triangle?
                 this.paintCell(cell, color, 'triangle');
             } else {
@@ -109,18 +111,18 @@
     SnakeGame.prototype.getStats = function() {
         return { // Will be printed out in reverse order.
             "percent: ": this.percentOccupied(),
-            "render:  ": SWOptions.getStyle(),
+            "render:  ": SnakeWorldOptions.getStyle(),
             "size:    ": this.snake.body.length,
-            "turn:    ": SWOptions.turnChance,
-            "speed:   ": SWOptions.speed,
-            "wonk:    ": SWOptions.sizeVariation,
-            "theme:   ": SWOptions.currentTheme,
-            "level:   ": SWOptions.cellWidth,
+            "turn:    ": SnakeWorldOptions.turnChance,
+            "speed:   ": SnakeWorldOptions.speed,
+            "wonk:    ": SnakeWorldOptions.sizeVariation,
+            "theme:   ": SnakeWorldOptions.currentTheme,
+            "level:   ": SnakeWorldOptions.cellWidth,
         }
     };
 
     SnakeGame.prototype.paintStats = function() {
-        if (!SWOptions.printInfo) {
+        if (!SnakeWorldOptions.printInfo) {
             return;
         }
         var stats = this.getStats();
@@ -144,15 +146,13 @@
             color = 0;
         }
         if (typeof style == 'undefined') {
-            style = SWOptions.getStyle();
+            style = SnakeWorldOptions.getStyle();
         }
-        var theme = SWOptions.getTheme();
-        this.context.fillStyle = (typeof color == 'string')
-            ? color
-            : theme[color % theme.length];
+        var theme = SnakeWorldOptions.getTheme();
+        this.context.fillStyle = (typeof color == 'string') ? color : theme[color % theme.length];
 
         if (style == 'random') {
-            style = SWOptions.getRandomStyle();
+            style = SnakeWorldOptions.getRandomStyle();
         }
         switch (style) {
             case 'circle':
@@ -174,21 +174,21 @@
     };
 
     SnakeGame.prototype.square = function(cell) {
-        var cellWidth = SWOptions.getCellWidth();
+        var cellWidth = SnakeWorldOptions.getCellWidth();
         this.context.fillRect(
-            cell.x * cellWidth + SWOptions.getSizeMod(),
-            cell.y * cellWidth + SWOptions.getSizeMod(),
-            cellWidth + SWOptions.getSizeMod(),
-            cellWidth + SWOptions.getSizeMod());
+            cell.x * cellWidth + SnakeWorldOptions.getSizeMod(),
+            cell.y * cellWidth + SnakeWorldOptions.getSizeMod(),
+            cellWidth + SnakeWorldOptions.getSizeMod(),
+            cellWidth + SnakeWorldOptions.getSizeMod());
     };
 
     SnakeGame.prototype.circle = function(cell) {
-        var cellWidth = SWOptions.getCellWidth();
+        var cellWidth = SnakeWorldOptions.getCellWidth();
         this.context.beginPath();
         this.context.arc(
             cell.x * cellWidth + cellWidth / 2,
             cell.y * cellWidth + cellWidth / 2,
-            cellWidth / 2 + SWOptions.getSizeMod(),
+            cellWidth / 2 + SnakeWorldOptions.getSizeMod(),
             0,
             2 * Math.PI);
         this.context.fill();
@@ -196,7 +196,7 @@
     };
 
     SnakeGame.prototype.triangle = function(cell) {
-        var cellWidth = SWOptions.getCellWidth();
+        var cellWidth = SnakeWorldOptions.getCellWidth();
         var loc = {
             x: cell.x * cellWidth,
             y: cell.y * cellWidth,
@@ -238,7 +238,7 @@
     };
 
     SnakeGame.prototype.increaseSpeed = function() {
-        SWOptions.modSpeed(1);
+        SnakeWorldOptions.modSpeed(1);
         this.resetGameLoop();
     };
 
@@ -250,13 +250,11 @@
     SnakeGame.prototype.startGame = function() {
         this.gameLoop = setInterval(function() {
             this.update();
-        }.bind(this), SWOptions.getSpeedInterval());
+        }.bind(this), SnakeWorldOptions.getSpeedInterval());
     };
 
     SnakeGame.prototype.pauseStart = function() {
-        this.gameLoop
-            ? this.pauseGame()
-            : this.startGame();
+        this.gameLoop ? this.pauseGame() : this.startGame();
     };
 
     SnakeGame.prototype.resetGameLoop = function() {
@@ -286,30 +284,32 @@
                 this.snake.move(Snake.Direction.DOWN);
                 break;
             case 66: // b
-                SWOptions.modTurnChance(1);
+                SnakeWorldOptions.modTurnChance(1);
                 break;
             case 67: // c
-                SWOptions.printInfo = !SWOptions.printInfo;
+                SnakeWorldOptions.printInfo = !SnakeWorldOptions.printInfo;
                 break;
             case 74: // j
-                SWOptions.modSizeVariation(1);
+                SnakeWorldOptions.modSizeVariation(1);
                 break;
             case 75: // k
                 this.increaseSpeed();
                 break;
             case 77: // m
-                SWOptions.cycleTheme();
+                SnakeWorldOptions.cycleTheme();
                 break;
             case 78: // n
-                SWOptions.cycleStyle();
+                SnakeWorldOptions.cycleStyle();
                 break;
             case 80: // p
                 this.pauseStart();
                 break;
             case 82: // r
-                SWOptions.modTurnChance(10);
-                SWOptions.modSpeed(5);
+                SnakeWorldOptions.modTurnChance(10);
+                SnakeWorldOptions.modSpeed(5);
                 this.resetGameLoop();
                 break;
         }
     };
+    return SnakeGame;
+});

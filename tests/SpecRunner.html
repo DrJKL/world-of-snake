@@ -10,13 +10,14 @@
     <script type="text/javascript" src="lib/jasmine-2.0.0/jasmine-html.js"></script>
     <script type="text/javascript" src="lib/jasmine-2.0.0/boot.js"></script>
     <!-- include source files here... -->
-    <script type="text/javascript" src="../scripts/Theme.js"></script>
-    <script type="text/javascript" src="../scripts/SnakeWorldOptions.js"></script>
-    <script type="text/javascript" src="../scripts/Cell.js"></script>
-    <script type="text/javascript" src="../scripts/Snake.js"></script>
-    <script type="text/javascript" src="../scripts/SnakeWorld.js"></script>
+    <script type="text/javascript" data-main="../scripts/main" src="../scripts/require.js"></script>
+    <script type="text/javascript" src="lib/runner.js"></script>
     <!-- include spec files here... -->
-    <script type="text/javascript" src="spec/ThemeSpec.js"></script>
+    <script type="text/javascript">
+        require(["spec/ThemeSpec", "spec/ContinuousSequenceSpec"], function() {
+            jasmine.getEnv().execute();
+        });
+    </script>
 </head>
 
 <body>
