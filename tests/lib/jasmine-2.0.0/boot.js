@@ -167,7 +167,7 @@
       currentWindowOnload();
     }
     htmlReporter.initialize();
-    env.execute();
+    //env.execute(); // Called inside a require block in the spec runner.
   };
 
   /**
