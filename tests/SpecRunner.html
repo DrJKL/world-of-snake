@@ -14,7 +14,12 @@
     <script type="text/javascript" src="lib/runner.js"></script>
     <!-- include spec files here... -->
     <script type="text/javascript">
-    var specs = ["spec/ThemeSpec", "spec/ContinuousSequenceSpec", "spec/CellSpec"];
+    var specs = [
+        "spec/ThemeSpec",
+        "spec/ContinuousSequenceSpec",
+        "spec/CellSpec",
+        "spec/wrapSpec"
+    ];
     require(specs, function() {
         jasmine.getEnv().execute();
     });
