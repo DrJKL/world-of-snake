@@ -5,6 +5,9 @@ require.config({
 });
 
 require([
+    'Cell',
+    'SnakeWorldOptions',
     'Theme',
     'ContinuousSequence',
+    'wrap',
 ]);
