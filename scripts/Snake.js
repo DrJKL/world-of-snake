@@ -25,10 +25,14 @@ define(["SnakeWorldOptions", "Cell", "wrap"], function(SnakeWorldOptions, Cell, 
         if (!snakeHead) {
             return false;
         }
-        for (var i = 1, check_x, check_y; i <= 15; ++i) {
-            check_x = snakeHead.x;
-            check_y = snakeHead.y;
-            switch (this.currentDirection) {
+        return checkRayCollision(snakeHead, food, this.currentDirection, 15);
+    };
+
+    function checkRayCollision(initialPoint, target, dir, viewDistance) {
+        for (var i = 1, check_x, check_y; i <= viewDistance; ++i) {
+            check_x = initialPoint.x;
+            check_y = initialPoint.y;
+            switch (dir) {
                 case Snake.Direction.RIGHT:
                     check_x += i;
                     break;
@@ -42,12 +46,12 @@ define(["SnakeWorldOptions", "Cell", "wrap"], function(SnakeWorldOptions, Cell, 
                     check_y += i;
                     break;
             }
-            if (food.x == check_x && food.y == check_y) {
+            if (target.x == check_x && target.y == check_y) {
                 return true;
             }
         }
         return false;
-    };
+    }
 
     Snake.prototype.getNewHead = function() {
         var foodSeen = this.foodVisible(this.game.food);
@@ -73,7 +77,6 @@ define(["SnakeWorldOptions", "Cell", "wrap"], function(SnakeWorldOptions, Cell, 
                     ny--;
                     break;
             }
-
         } while (this.checkCollision(new Cell(nx, ny)) && ++tries < 20);
 
         if (tries == 20) {
@@ -111,5 +114,6 @@ define(["SnakeWorldOptions", "Cell", "wrap"], function(SnakeWorldOptions, Cell, 
         }
         return false;
     }
+
     return Snake;
 });
