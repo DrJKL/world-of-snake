@@ -41,6 +41,7 @@
     });
     require(['vendor/hammer.min.js'], function(Hammer) {
         window.hammertime = Hammer(canvas).on('drag', function(e) {
+            e.gesture.preventDefault();
             var dir;
             switch (e.gesture.direction) {
                 case Hammer.DIRECTION_UP:
