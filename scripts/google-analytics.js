@@ -7,10 +7,6 @@ define(function (require) {
   window.ga = function () { (window.ga.q = window.ga.q || []).push(arguments); };
   window.ga.l = 1 * new Date();
  
-  // Immediately add a pageview event to the queue.
-  window.ga("create", "UA-49645063-1", "drjkl.github.io");
-  window.ga("send", "pageview");
- 
   // Create a function that wraps `window.ga`.
   // This allows dependant modules to use `window.ga` without knowingly
   // programming against a global object.
