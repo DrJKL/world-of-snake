@@ -12,14 +12,22 @@ body {
 }
 #gamecanvas {
     display: block;
-    height: 540;
     margin: 0 auto;
     text-align: center;
-    width: 960;
 }
 a {
     text-decoration: none;
 }
 a:hover {
     font-weight: bold;
+}
+#canvasfallbackmessage img {
+    max-width: 50%;
+}
+#canvasfallbackmessage p img {
+    height: 1em;
+    background-color: #DDD;
+    padding: .15em 0.4em;
+    vertical-align: bottom;
+    margin: 0;
 }

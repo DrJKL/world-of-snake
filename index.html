@@ -4,7 +4,7 @@
 <head>
     <title>world of snake</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <script type="text/javascript" data-main="scripts/main" src="scripts/require.js"></script>
+    <script type="text/javascript" data-main="scripts/main" src="vendor/require.js"></script>
     <!-- GA Script -->
     <script type="text/javascript">
     require(['google-analytics'], function(ga) {
@@ -22,8 +22,10 @@
         <canvas id='gamecanvas' tabindex='1' width="960" height="540">
             <div id="canvasfallbackmessage">
                 <p>Your browser doesn't support canvas.</p>
-                <p><a href="//www.google.com/chrome/">Click here</a> to download Chrome.</p>
-                <img src="" alt="Sorry you have an old browser. Here's a picture." title="Sorry you have an old browser. Here's a picture." />
+                <p><a href="//www.google.com/chrome/">Click here</a> to download
+                    <img src="images/chrome-logo.svg">
+                </p>
+                <img src="images/Shiba-Inu.jpg" alt="Sorry you have an old browser. Here's a picture of a puppy." title="Sorry you have an old browser. Here's a picture of a puppy." />
             </div>
         </canvas>
     </div>
@@ -31,10 +33,29 @@
     </footer>
     <!-- Executing Scripts -->
     <script type="text/javascript">
+    var canvas = document.getElementById('gamecanvas');
     require(["SnakeGame"], function(SnakeGame) {
-        (function(w, d) {
-            w['GameInstance'] = new SnakeGame(d.getElementById('gamecanvas'));
-        })(window, document);
+        (function(w, c) {
+            w['GameInstance'] = new SnakeGame(c);
+        })(window, canvas);
+    });
+    require(['vendor/hammer.min.js'], function(Hammer) {
+        window.hammertime = Hammer(canvas).on('swipe', function(e) {
+            console.log(e.type + " : " + e.gesture.eventType + " : " + e.gesture.direction);
+            var dir;
+            switch (e.gesture.direction) {
+                case Hammer.DIRECTION_UP:
+                    dir = "w";
+                case Hammer.DIRECTION_DOWN:
+                    dir = "s";
+                case Hammer.DIRECTION_LEFT:
+                    dir = "a";
+                case Hammer.DIRECTION_RIGHT:
+                    dir = "d";
+            }
+            var evt = document.createEvent("KeyboardEvent");
+            (evt.initKeyEvent || evt.initKeyboardEvent)("keypress", true, true, window, 0, 0, 0, 0, 0, dir.charCodeAt(0))
+        });
     });
     </script>
 </body>
