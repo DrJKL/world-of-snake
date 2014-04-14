@@ -305,8 +305,8 @@ define(["SnakeWorldOptions", "Cell", "Snake"], function(SnakeWorldOptions, Cell,
                 this.pauseStart();
                 break;
             case 82: // r
-                SnakeWorldOptions.modTurnChance(10);
-                SnakeWorldOptions.modSpeed(5);
+                SnakeWorldOptions.turnChance = (SnakeWorldOptions.turnChance == 10) ? 0 : 10;
+                SnakeWorldOptions.speed = (SnakeWorldOptions.speed == 6) ? 1 : 6;
                 this.resetGameLoop();
                 break;
         }
