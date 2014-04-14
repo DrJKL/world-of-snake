@@ -18,5 +18,4 @@ define(function (require) {
   require(["//www.google-analytics.com/analytics.js"]);
  
   return module;
- 
 });

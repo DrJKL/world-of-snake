@@ -45,16 +45,19 @@
             var dir;
             switch (e.gesture.direction) {
                 case Hammer.DIRECTION_UP:
-                    dir = "w";
+                    dir = "W";
+                    break;
                 case Hammer.DIRECTION_DOWN:
-                    dir = "s";
+                    dir = "S";
+                    break;
                 case Hammer.DIRECTION_LEFT:
-                    dir = "a";
+                    dir = "A";
+                    break;
                 case Hammer.DIRECTION_RIGHT:
-                    dir = "d";
+                    dir = "D";
+                    break;
             }
-            var evt = document.createEvent("KeyboardEvent");
-            (evt.initKeyEvent || evt.initKeyboardEvent)("keypress", true, true, window, 0, 0, 0, 0, 0, dir.charCodeAt(0))
+            window.GameInstance.processKeyPress(dir.charCodeAt(0));
         });
     });
     </script>
