@@ -1,4 +1,4 @@
-define(["Theme","ContinuousSequence", "wrap"], function(Theme, ContinuousSequence, wrap) {
+define(["Theme","ContinuousSequence", "wrap", "google-analytics"], function(Theme, ContinuousSequence, wrap, ga) {
     function SWOptions() {}
     /* Defaults */
     SWOptions.currentTheme = 0;
@@ -50,6 +50,7 @@ define(["Theme","ContinuousSequence", "wrap"], function(Theme, ContinuousSequenc
     };
 
     SWOptions.shrinkCells = function() {
+        ga('send', 'event', 'level', 'increment', SWOptions.cellWidths.length);
         if (SWOptions.cellWidth < SWOptions.cellWidths.length) {
             SWOptions.cellWidth++;
         }
