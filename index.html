@@ -40,8 +40,7 @@
         })(window, canvas);
     });
     require(['vendor/hammer.min.js'], function(Hammer) {
-        window.hammertime = Hammer(canvas).on('swipe', function(e) {
-            console.log(e.type + " : " + e.gesture.eventType + " : " + e.gesture.direction);
+        window.hammertime = Hammer(canvas).on('drag', function(e) {
             var dir;
             switch (e.gesture.direction) {
                 case Hammer.DIRECTION_UP:
