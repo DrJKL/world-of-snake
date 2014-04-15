@@ -264,9 +264,6 @@ define(["SnakeWorldOptions", "Cell", "Snake"], function(SnakeWorldOptions, Cell,
 
     SnakeGame.prototype.processKeyPress = function(keyCode) {
         switch (keyCode) {
-            case 32: // space
-                this.snake.jump(this.getRandomCell());
-                break;
             case 37: // left
             case 65: // a
                 this.snake.move(Snake.Direction.LEFT);
@@ -282,6 +279,9 @@ define(["SnakeWorldOptions", "Cell", "Snake"], function(SnakeWorldOptions, Cell,
             case 40: // down
             case 83: // s
                 this.snake.move(Snake.Direction.DOWN);
+                break;
+            case 32: // space
+                this.snake.jump(this.getRandomCell());
                 break;
             case 66: // b
                 SnakeWorldOptions.modTurnChance(1);
