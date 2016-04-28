@@ -10,4 +10,8 @@ require([
     'Theme',
     'ContinuousSequence',
     'wrap',
+    'Snake',
+    'SnakeGame',
+    'google-analytics',
+    
 ]);
