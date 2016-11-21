@@ -1,30 +1,25 @@
-function Theme(minHue, maxHue, minSat, maxSat, minLum, maxLum) {
-    this.minHue = minHue;
-    this.maxHue = maxHue || minHue;
+define(["ContinuousSequence"], function(ContinuousSequence) {
+    function Theme(hue, sat, lum) {
+        this.hue = hue;
+        this.sat = sat || new ContinuousSequence(100);
+        this.lum = lum || new ContinuousSequence(50);
+    }
 
-    this.minSat = minSat || 100;
-    this.maxSat = maxSat || 100;
+    Theme.prototype.getHue = function(percent) {
+        return this.hue.getValue(percent);
+    };
+    Theme.prototype.getSat = function(percent) {
+        return this.sat.getValue(percent);
+    };
+    Theme.prototype.getLum = function(percent) {
+        return this.lum.getValue(percent);
+    };
 
-    this.minLum = minLum || 50;
-    this.maxLum = maxLum || 50;
-}
-
-Theme.prototype.getHue = function(percent) {
-    var hueDiff = this.maxHue - this.minHue;
-    return this.minHue + Math.floor(percent * hueDiff);
-};
-Theme.prototype.getSat = function(percent) {
-    var satDiff = this.maxSat - this.minSat;
-    return this.minSat + Math.floor(percent * satDiff);
-};
-Theme.prototype.getLum = function(percent) {
-    var lumDiff = this.maxLum - this.minLum;
-    return this.minLum + Math.floor(percent * lumDiff);
-};
-
-Theme.prototype.getHslColor = function(percent) {
-    var hue = this.getHue(percent);
-    var sat = this.getSat(percent);
-    var lum = this.getLum(percent);
-    return 'hsl(' + hue + ',' + sat + '%,' + lum + '%)';
-};
+    Theme.prototype.getHslColor = function(percent) {
+        var hue = this.getHue(percent);
+        var sat = this.getSat(percent);
+        var lum = this.getLum(percent);
+        return 'hsl(' + hue + ',' + sat + '%,' + lum + '%)';
+    };
+    return Theme;
+});

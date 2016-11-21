@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>world of snake</title>
+    <link rel="stylesheet" type="text/css" href="styles/style.css">
+    <script type="text/javascript" data-main="scripts/main" src="scripts/require.js"></script>
+    <!-- GA Script -->
+    <script type="text/javascript">
+    try {
+      require(['scripts/google-analytics'], function(ga) {
+          ga("create", "UA-49645063-1", "drjkl.github.io");
+          ga("send", "pageview");
+      });
+    } catch (e) {}
+    </script>
+</head>
+
+<body>
+    <header>
+        <h1 id='pagetitle'>world of snake</h1>
+    </header>
+    <div class="container" id="maincontent">
+        <canvas id='gamecanvas' tabindex='1' width="960" height="540">
+            <div id="canvasfallbackmessage">
+                <p>Your browser doesn't support canvas.</p>
+                <p><a href="//www.google.com/chrome/">Click here</a> to download
+                    <img src="images/chrome-logo.svg">
+                </p>
+                <img src="images/Shiba-Inu.jpg" alt="Sorry you have an old browser. Here's a picture of a puppy." title="Sorry you have an old browser. Here's a picture of a puppy." />
+            </div>
+        </canvas>
+    </div>
+    <footer>
+    </footer>
+    <!-- Executing Scripts -->
+    <script type="text/javascript">
+    var canvas = document.getElementById('gamecanvas');
+    require(["SnakeGame"], function(SnakeGame) {
+        (function(w, c) {
+            w['GameInstance'] = new SnakeGame(c);
+        })(window, canvas);
+    });
+    require(['scripts/hammer.min.js'], function(Hammer) {
+        window.hammertime = Hammer(canvas).on('drag', function(e) {
+            e.gesture.preventDefault();
+            var dir;
+            switch (e.gesture.direction) {
+                case Hammer.DIRECTION_UP:
+                    dir = "W";
+                    break;
+                case Hammer.DIRECTION_DOWN:
+                    dir = "S";
+                    break;
+                case Hammer.DIRECTION_LEFT:
+                    dir = "A";
+                    break;
+                case Hammer.DIRECTION_RIGHT:
+                    dir = "D";
+                    break;
+            }
+            window.GameInstance.processKeyPress(dir.charCodeAt(0));
+        });
+    });
+    </script>
+</body>
+
+</html>
