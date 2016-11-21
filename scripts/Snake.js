@@ -22,16 +22,12 @@ define(["SnakeWorldOptions", "Cell", "wrap"], function(SnakeWorldOptions, Cell, 
 
     Snake.prototype.foodVisible = function(food) {
         var snakeHead = this.body[0];
-        if (!snakeHead) {
-            return false;
-        }
-        return checkRayCollision(snakeHead, food, this.currentDirection, 15);
+        return snakeHead && checkRayCollision(snakeHead, food, this.currentDirection, 15);
     };
 
     function checkRayCollision(initialPoint, target, dir, viewDistance) {
         for (var i = 1, check_x, check_y; i <= viewDistance; ++i) {
-            check_x = initialPoint.x;
-            check_y = initialPoint.y;
+            let [check_x, check_y] = [initialPoint.x, initialPoint.y];
             switch (dir) {
                 case Snake.Direction.RIGHT:
                     check_x += i;

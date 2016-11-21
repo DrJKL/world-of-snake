@@ -1,69 +1,71 @@
-define(["SnakeWorldOptions"], function(SWOptions) {
-    function Cell(x, y) {
-        this.x = x;
-        this.y = y;
-    }
+define(['SnakeWorldOptions'], function (SWOptions) {
+	function Cell (x, y) {
+		this.x = x;
+		this.y = y;
+	}
 
-    Cell.prototype.equals = function(other) {
-        if (!(other.hasOwnProperty('x') && other.hasOwnProperty('y'))) {
-            return false;
-        }
-        return (this.x == other.x && this.y == other.y);
-    };
+	Cell.prototype.equals = function ({x , y}) {
+		return (this.x == x && this.y == y);
+	};
 
-    Cell.prototype.pointOne = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()),
-            y: (this.y * SWOptions.getCellWidth()),
-        };
-    };
-    Cell.prototype.pointTwo = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
-            y: (this.y * SWOptions.getCellWidth()),
-        };
-    };
-    Cell.prototype.pointThree = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
-            y: (this.y * SWOptions.getCellWidth()),
-        };
-    };
-    Cell.prototype.pointFour = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()),
-            y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
-        };
-    };
-    Cell.prototype.pointFive = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
-            y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
-        };
-    };
-    Cell.prototype.pointSix = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
-            y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
-        };
-    };
-    Cell.prototype.pointSeven = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()),
-            y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
-        };
-    };
-    Cell.prototype.pointEight = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth() / 2),
-            y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
-        };
-    };
-    Cell.prototype.pointNine = function() {
-        return {
-            x: (this.x * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
-            y: (this.y * SWOptions.getCellWidth()) + (SWOptions.getCellWidth()),
-        };
-    };
-    return Cell;
+	Cell.prototype.x_one = function () {
+		return this.x * SWOptions.getCellWidth();
+	};
+	Cell.prototype.y_one = function () {
+		return this.y * SWOptions.getCellWidth();
+	};
+	Cell.prototype.half_cell = function () {
+		return SWOptions.getCellWidth() / 2;
+	};
+	Cell.prototype.full_cell = function () {
+		return SWOptions.getCellWidth();
+	};
+	let xy = function (x, y) {
+		return {x,y};
+	};
+
+	Cell.prototype.pointOne = function () {
+		return xy(this.x_one(), this.y_one());
+	};
+	Cell.prototype.pointTwo = function () {
+		return xy(
+			this.x_one() + this.half_cell(),
+			this.y_one());
+	};
+	Cell.prototype.pointThree = function () {
+		return xy(
+			this.x_one() + this.full_cell(),
+			this.y_one());
+	};
+	Cell.prototype.pointFour = function () {
+		return xy(
+			this.x_one(),
+			this.y_one() + this.half_cell());
+	};
+	Cell.prototype.pointFive = function () {
+		return xy(
+			this.x_one() + this.half_cell(),
+			this.y_one() + this.half_cell());
+	};
+	Cell.prototype.pointSix = function () {
+		return xy(
+			this.x_one() + this.full_cell(),
+			this.y_one() + this.half_cell());
+	};
+	Cell.prototype.pointSeven = function () {
+		return xy(
+			this.x_one(),
+			this.y_one() + this.full_cell());
+	};
+	Cell.prototype.pointEight = function () {
+		return xy(
+			this.x_one() + this.half_cell(),
+			this.y_one() + this.full_cell());
+	};
+	Cell.prototype.pointNine = function () {
+		return xy(
+			this.x_one() + this.full_cell(),
+			this.y_one() + this.full_cell());
+	};
+	return Cell;
 });
