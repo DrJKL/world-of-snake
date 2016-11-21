@@ -7,10 +7,12 @@
     <script type="text/javascript" data-main="scripts/main" src="scripts/require.js"></script>
     <!-- GA Script -->
     <script type="text/javascript">
-    // require(['scripts/google-analytics'], function(ga) {
-    //     ga("create", "UA-49645063-1", "drjkl.github.io");
-    //     ga("send", "pageview");
-    // });
+    try {
+      require(['scripts/google-analytics'], function(ga) {
+          ga("create", "UA-49645063-1", "drjkl.github.io");
+          ga("send", "pageview");
+      });
+    } catch (e) {}
     </script>
 </head>
 
