@@ -4,13 +4,13 @@
 <head>
     <title>world of snake</title>
     <link rel="stylesheet" type="text/css" href="styles/style.css">
-    <script type="text/javascript" data-main="scripts/main" src="vendor/require.js"></script>
+    <script type="text/javascript" data-main="scripts/main" src="scripts/require.js"></script>
     <!-- GA Script -->
     <script type="text/javascript">
-    require(['scripts/google-analytics'], function(ga) {
-        ga("create", "UA-49645063-1", "drjkl.github.io");
-        ga("send", "pageview");
-    });
+    // require(['scripts/google-analytics'], function(ga) {
+    //     ga("create", "UA-49645063-1", "drjkl.github.io");
+    //     ga("send", "pageview");
+    // });
     </script>
 </head>
 
@@ -39,7 +39,7 @@
             w['GameInstance'] = new SnakeGame(c);
         })(window, canvas);
     });
-    require(['vendor/hammer.min.js'], function(Hammer) {
+    require(['scripts/hammer.min.js'], function(Hammer) {
         window.hammertime = Hammer(canvas).on('drag', function(e) {
             e.gesture.preventDefault();
             var dir;

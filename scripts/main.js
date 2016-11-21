@@ -4,7 +4,7 @@ require.config({
         spec: "tests/spec",
         hammer: [
             "//raw.github.com/jantimon/hammer.js/master/dist/hammer.min",
-            "vendor/hammer.min"
+            "scripts/hammer.min"
         ],
     },
     shim: {
